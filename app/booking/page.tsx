@@ -2,9 +2,7 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { FiCalendar, FiClock, FiUser, FiCreditCard, FiCheck } from 'react-icons/fi'
-import StripeProvider from '@/components/StripeProvider'
-import PaymentForm from '@/components/PaymentForm'
+import { FiCalendar, FiClock, FiUser, FiCheck, FiSend } from 'react-icons/fi'
 
 const BookingPage = () => {
   const [currentStep, setCurrentStep] = useState(1)
@@ -19,6 +17,8 @@ const BookingPage = () => {
     notes: '',
     amount: 0
   })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isSubmitted, setIsSubmitted] = useState(false)
 
   const services = [
     {
@@ -90,16 +90,26 @@ const BookingPage = () => {
     setCurrentStep(3)
   }
 
-  const handlePersonalInfoSubmit = (data: any) => {
+  const handlePersonalInfoSubmit = async (data: any) => {
     setBookingData({
       ...bookingData,
       ...data
     })
-    setCurrentStep(4)
-  }
-
-  const handlePaymentSuccess = () => {
-    setCurrentStep(5)
+    setIsSubmitting(true)
+    
+    try {
+      // Demo booking submission - would normally send to API
+      console.log('Booking request submitted:', { ...bookingData, ...data })
+      
+      // Simulate API call delay
+      await new Promise(resolve => setTimeout(resolve, 2000))
+      
+      setIsSubmitting(false)
+      setCurrentStep(4)
+    } catch (error) {
+      console.error('Booking submission error:', error)
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -128,7 +138,7 @@ const BookingPage = () => {
         <div className="container-max">
           <div className="flex items-center justify-center">
             <div className="flex items-center space-x-4">
-              {[1, 2, 3, 4, 5].map((step) => (
+              {[1, 2, 3, 4].map((step) => (
                 <div key={step} className="flex items-center">
                   <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium ${
                     currentStep >= step 
@@ -137,7 +147,7 @@ const BookingPage = () => {
                   }`}>
                     {step}
                   </div>
-                  {step < 5 && (
+                  {step < 4 && (
                     <div className={`w-16 h-1 mx-2 ${
                       currentStep > step ? 'bg-henna-600' : 'bg-gray-200'
                     }`} />
@@ -253,32 +263,12 @@ const BookingPage = () => {
               <h2 className="text-3xl font-playfair font-bold text-henna-800 mb-8 text-center">
                 Your Information
               </h2>
-              <PersonalInfoForm onSubmit={handlePersonalInfoSubmit} />
+              <PersonalInfoForm onSubmit={handlePersonalInfoSubmit} isSubmitting={isSubmitting} />
             </motion.div>
           )}
 
-          {/* Step 4: Payment */}
+          {/* Step 4: Confirmation */}
           {currentStep === 4 && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-            >
-              <h2 className="text-3xl font-playfair font-bold text-henna-800 mb-8 text-center">
-                Secure Payment
-              </h2>
-              <StripeProvider>
-                <PaymentForm
-                  amount={bookingData.amount}
-                  serviceName={bookingData.service}
-                  onSuccess={handlePaymentSuccess}
-                />
-              </StripeProvider>
-            </motion.div>
-          )}
-
-          {/* Step 5: Confirmation */}
-          {currentStep === 5 && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -289,7 +279,7 @@ const BookingPage = () => {
                 <FiCheck className="text-green-600 text-2xl" />
               </div>
               <h2 className="text-3xl font-playfair font-bold text-henna-800 mb-6">
-                Booking Confirmed!
+                Booking Request Submitted!
               </h2>
               <div className="bg-henna-50 rounded-2xl p-8 max-w-md mx-auto">
                 <h3 className="text-xl font-semibold text-henna-800 mb-4">
@@ -313,13 +303,13 @@ const BookingPage = () => {
                     <span className="font-medium">{bookingData.duration}</span>
                   </div>
                   <div className="flex justify-between border-t border-henna-200 pt-2">
-                    <span className="text-henna-600">Total:</span>
+                    <span className="text-henna-600">Estimated Price:</span>
                     <span className="font-bold">${bookingData.amount}</span>
                   </div>
                 </div>
               </div>
               <p className="text-henna-600 mt-6">
-                You will receive a confirmation email with all the details shortly.
+                Thank you for your booking request! I'll review your details and get back to you within 24 hours to confirm your appointment and discuss payment options.
               </p>
             </motion.div>
           )}
@@ -330,7 +320,7 @@ const BookingPage = () => {
 }
 
 // Personal Info Form Component
-const PersonalInfoForm = ({ onSubmit }: { onSubmit: (data: any) => void }) => {
+const PersonalInfoForm = ({ onSubmit, isSubmitting }: { onSubmit: (data: any) => void, isSubmitting: boolean }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -413,9 +403,20 @@ const PersonalInfoForm = ({ onSubmit }: { onSubmit: (data: any) => void }) => {
 
       <button
         type="submit"
-        className="w-full bg-henna-600 hover:bg-henna-700 text-white font-medium py-4 px-6 rounded-lg transition-colors duration-300"
+        disabled={isSubmitting}
+        className="w-full bg-henna-600 hover:bg-henna-700 disabled:bg-henna-400 text-white font-medium py-4 px-6 rounded-lg transition-colors duration-300 flex items-center justify-center"
       >
-        Continue to Payment
+        {isSubmitting ? (
+          <>
+            <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+            Submitting Request...
+          </>
+        ) : (
+          <>
+            <FiSend className="mr-2" />
+            Submit Booking Request
+          </>
+        )}
       </button>
     </form>
   )
