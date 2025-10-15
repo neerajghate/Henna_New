@@ -1,37 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Lato:wght@300;400;500;600;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* SYSTEM HARDENING */
-*,
-*::before,
-*::after { box-sizing: border-box; }
-html, body { width: 100%; max-width: 100%; overflow-x: hidden; }
-html { scroll-behavior: smooth; }
-body { background-color: #fefefe; }
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    font-family: 'Lato', sans-serif;
+    background-color: #fefefe;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+  }
+}
 
-/* TYPOGRAPHY (Google fonts handled via next/font in layout) */
-h1, h2, h3, h4, h5, h6 { font-family: "Playfair Display", ui-serif, Georgia, serif; }
-
-/* COMPONENT PRESETS */
 @layer components {
   .btn-primary {
     @apply bg-henna-600 hover:bg-henna-700 text-white font-medium py-3 px-6 rounded-lg transition-colors duration-300 shadow-lg hover:shadow-xl;
   }
+  
   .btn-secondary {
     @apply bg-transparent border-2 border-henna-600 text-henna-600 hover:bg-henna-600 hover:text-white font-medium py-3 px-6 rounded-lg transition-all duration-300;
   }
-
-  /* Use container-max for ALL section inners; keep section-padding for vertical rhythm only */
-  .container-max { @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8; }
-  .section-padding { @apply py-16; }
-
-  .text-gradient { @apply bg-gradient-to-r from-henna-600 to-gold-600 bg-clip-text text-transparent; }
-  .card-hover { @apply transition-all duration-300 hover:shadow-2xl hover:-translate-y-2; }
+  
+  .section-padding {
+    @apply py-16 px-4 sm:px-6 lg:px-8;
+  }
+  
+  .container-max {
+    @apply max-w-7xl mx-auto;
+  }
+  
+  .text-gradient {
+    @apply bg-gradient-to-r from-henna-600 to-gold-600 bg-clip-text text-transparent;
+  }
+  
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-2xl hover:-translate-y-2;
+  }
 }
 
-/* UTILITIES */
 @layer utilities {
-  .text-shadow { text-shadow: 2px 2px 4px rgba(0,0,0,.3); }
-  .backdrop-blur-custom { backdrop-filter: blur(10px); }
+  .text-shadow {
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  }
+  
+  .backdrop-blur-custom {
+    backdrop-filter: blur(10px);
+  }
 }
