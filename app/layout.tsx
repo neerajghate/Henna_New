@@ -7,53 +7,34 @@ import Footer from "@/components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
-const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL ??
-  "https://henna-new.vercel.app/";
+// single source of truth for width + padding
+const CONTAINER = "mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
   title: "Rita Sheth - Professional Henna Artist | Mehendi Artisan",
   description:
     "Professional henna artist Rita Sheth serving Denver, CO. Specializing in bridal mehendi, Arabic designs, makeup, and hair styling. 18+ years of experience.",
-  keywords:
-    "henna artist, mehendi, bridal henna, Arabic henna, makeup artist, hair styling, Denver, Colorado",
-  authors: [{ name: "Rita Sheth" }],
-  openGraph: {
-    title: "Rita Sheth - Professional Henna Artist",
-    description:
-      "Professional henna artist with 18+ years of experience. Serving Denver, CO with bridal mehendi, Arabic designs, and more.",
-    url: siteUrl,
-    siteName: "Rita Sheth",
-    type: "website",
-    locale: "en_US",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Rita Sheth - Professional Henna Artist",
-    description:
-      "Professional henna artist with 18+ years of experience. Serving Denver, CO with bridal mehendi, Arabic designs, and more.",
-  },
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ?? "https://henna-new.vercel.app/"
+  ),
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className={`${inter.className} bg-white text-neutral-900`}>
-        <header className="sticky top-0 z-50 border-b border-neutral-200 bg-white/80 backdrop-blur">
-          <div className="mx-auto max-w-6xl px-4">
+        {/* Sticky header: fixed height avoids jump during scroll/animations */}
+        <header className="sticky top-0 z-50 inset-x-0 bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/70 shadow-sm">
+          <div className={`${CONTAINER} h-16 flex items-center`}>
             <Navigation />
           </div>
         </header>
 
-        <main className="mx-auto min-h-screen max-w-6xl px-4">{children}</main>
+        {/* Reserve space and unify content width */}
+        <main className={`${CONTAINER} pt-6`}>{children}</main>
 
-        <footer className="border-t border-neutral-200">
-          <div className="mx-auto max-w-6xl px-4">
+        <footer className="mt-16 border-t border-neutral-200">
+          <div className={CONTAINER}>
             <Footer />
           </div>
         </footer>
