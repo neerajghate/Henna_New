@@ -1,33 +1,29 @@
-{
-  "name": "rita-sheth-henna-portfolio",
-  "version": "1.0.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+// app/layout.tsx
+import "./globals.css";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  metadataBase: new URL("https://https://henna-new-3sca.vercel.app/"),
+  title: "Rita Sheth | Henna Artist",
+  description: "Professional mehndi (henna) artistry in the USA.",
+  openGraph: {
+    title: "Rita Sheth | Henna Artist",
+    description: "Professional mehndi (henna) artistry in the USA.",
+    url: "https://<your-vercel-subdomain>.vercel.app",
+    siteName: "Rita Sheth",
+    type: "website"
   },
-  "engines": {
-    "node": ">=18 <21"
-  },
-  "dependencies": {
-    "next": "14.0.4",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "typescript": "5.6.3",
-    "@types/node": "20.12.12",
-    "@types/react": "18.3.3",
-    "@types/react-dom": "18.3.0",
-    "tailwindcss": "3.4.10",
-    "autoprefixer": "10.4.20",
-    "postcss": "8.4.47",
-    "framer-motion": "10.16.16",
-    "react-icons": "4.12.0",
-    "sharp": "0.33.1"
-  },
-  "devDependencies": {
-    "eslint": "8.57.1",
-    "eslint-config-next": "14.0.4"
+  twitter: {
+    card: "summary_large_image",
+    title: "Rita Sheth | Henna Artist",
+    description: "Professional mehndi (henna) artistry in the USA."
   }
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en">
+      <body>{children}</body>
+    </html>
+  );
 }
