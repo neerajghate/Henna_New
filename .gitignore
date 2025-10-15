@@ -1,9 +1,39 @@
-.next/
-node_modules/
-.env.local
+# Next.js / build output
+.next
+out
+dist
+*.tsbuildinfo
+
+# Dependencies / package managers
+node_modules
+pnpm-lock.yaml
+yarn.lock
+package-lock.json    # keep this tracked if you rely on npm CI (recommended)
+# ^ If you use npm CI, REMOVE this ignore line so package-lock.json stays in Git.
+
+# Env & secrets
 .env
+.env.*
+!.env.example
+
+# Logs & caches
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-.vercel/
+pnpm-debug.log*
+logs
+*.log
+.eslintcache
+.stylelintcache
+.parcel-cache
+.turbo
+
+# Vercel
+.vercel
+
+# OS / editors
 .DS_Store
+Thumbs.db
+.idea
+.vscode/*
+!.vscode/extensions.json

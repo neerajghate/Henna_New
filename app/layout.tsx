@@ -1,38 +1,33 @@
-import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
-import './globals.css'
-import Navigation from '@/components/Navigation'
-import Footer from '@/components/Footer'
-
-const inter = Inter({ subsets: ['latin'] })
-
-export const metadata: Metadata = {
-  title: 'Rita Sheth - Professional Henna Artist | Mehendi Artisan',
-  description: 'Professional henna artist Rita Sheth serving Denver, CO. Specializing in bridal mehendi, Arabic designs, makeup, and hair styling. 18+ years of experience.',
-  keywords: 'henna artist, mehendi, bridal henna, Arabic henna, makeup artist, hair styling, Denver, Colorado',
-  authors: [{ name: 'Rita Sheth' }],
-  openGraph: {
-    title: 'Rita Sheth - Professional Henna Artist',
-    description: 'Professional henna artist with 18+ years of experience. Serving Denver, CO with bridal mehendi, Arabic designs, and more.',
-    type: 'website',
-    locale: 'en_US',
+{
+  "name": "rita-sheth-henna-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
-}
-
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
-  return (
-    <html lang="en">
-      <body className={inter.className}>
-        <Navigation />
-        <main className="min-h-screen">
-          {children}
-        </main>
-        <Footer />
-      </body>
-    </html>
-  )
+  "engines": {
+    "node": ">=18 <21"
+  },
+  "dependencies": {
+    "next": "14.0.4",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "typescript": "5.6.3",
+    "@types/node": "20.12.12",
+    "@types/react": "18.3.3",
+    "@types/react-dom": "18.3.0",
+    "tailwindcss": "3.4.10",
+    "autoprefixer": "10.4.20",
+    "postcss": "8.4.47",
+    "framer-motion": "10.16.16",
+    "react-icons": "4.12.0",
+    "sharp": "0.33.1"
+  },
+  "devDependencies": {
+    "eslint": "8.57.1",
+    "eslint-config-next": "14.0.4"
+  }
 }
