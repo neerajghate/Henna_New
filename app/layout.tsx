@@ -20,8 +20,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className="min-h-screen bg-white text-neutral-900 antialiased">
         {/* Sticky header controls positioning; Navigation is NOT fixed */}
-        <header className={`sticky top-0 z-50 border-b border-neutral-200 bg-white/90 backdrop-blur ${HEADER_H}`}>
-          <div className={`${CONTAINER} h-full flex items-center`}>
+        <header className="z-50 border-b border-neutral-200 bg-transparent">
+        <div className="mx-auto max-w-6xl px-4">
             <Navigation />
           </div>
         </header>
