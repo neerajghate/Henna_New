@@ -14,12 +14,12 @@ const menuItems = [
     submenu: [
       { name: "Mehendi (Henna)", href: "/services/mehendi" },
       { name: "Make Up", href: "/services/makeup" },
-      { name: "Hair Style", href: "/services/hairstyle" }
-    ]
+      { name: "Hair Style", href: "/services/hairstyle" },
+    ],
   },
   { name: "Gallery", href: "/gallery" },
   { name: "About Me", href: "/about" },
-  { name: "Contact Us", href: "/contact" }
+  { name: "Contact Us", href: "/contact" },
 ];
 
 const mehendiTypes = [
@@ -30,7 +30,7 @@ const mehendiTypes = [
   { name: "Designer Mehendi", href: "/services/mehendi/designer" },
   { name: "Theme Mehendi", href: "/services/mehendi/theme" },
   { name: "Tattoo Mehendi", href: "/services/mehendi/tattoo" },
-  { name: "Tribal Mehendi", href: "/services/mehendi/tribal" }
+  { name: "Tribal Mehendi", href: "/services/mehendi/tribal" },
 ];
 
 export default function Navigation() {
@@ -44,7 +44,6 @@ export default function Navigation() {
   }, []);
 
   return (
-    // IMPORTANT: no `fixed` here. Let the parent <header> handle stickiness.
     <motion.nav
       className={`w-full transition-colors duration-300 ${
         scrolled ? "text-henna-800" : "text-henna-800"
@@ -53,7 +52,8 @@ export default function Navigation() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35 }}
     >
-      <div className="flex items-center justify-between h-20">
+      {/* Keep navbar content within page rails */}
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex items-center justify-between h-20">
         {/* Logo */}
         <Link href="/" className="flex-shrink-0" aria-label="Home">
           <Logo size="sm" />
@@ -61,7 +61,10 @@ export default function Navigation() {
 
         {/* Desktop nav */}
         <div className="hidden lg:flex items-center space-x-8">
-          <Link href="/" className="font-medium hover:text-henna-600 transition-colors">
+          <Link
+            href="/"
+            className="font-medium hover:text-henna-600 transition-colors"
+          >
             Home
           </Link>
 
@@ -130,7 +133,7 @@ export default function Navigation() {
         </button>
       </div>
 
-      {/* Mobile menu (drops below header) */}
+      {/* Mobile menu */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -141,7 +144,7 @@ export default function Navigation() {
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.25 }}
           >
-            <div className="py-4">
+            <div className="px-4 py-4">
               <div className="space-y-2">
                 <Link
                   href="/"
