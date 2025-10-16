@@ -1,34 +1,47 @@
-// app/layout.tsx
-import "./globals.css";
-import type { Metadata } from "next";
-import Navigation from "@/components/Navigation";
+import type { Metadata } from 'next'
+import { Inter } from 'next/font/google'
+import './globals.css'
+import Navigation from '@/components/Navigation'
+import Footer from '@/components/Footer'
 
-const CONTAINER = "mx-auto max-w-6xl px-4";
-const HEADER_H = "h-20";  // 80px header
-const MAIN_PT  = "pt-20"; // match header height
+const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://henna-new.vercel.app/"), // fixed double-https
-  title: "Rita Sheth | Henna Artist",
-  description: "Professional mehndi (henna) artistry in the USA."
-};
+  title: 'Rita Sheth - Professional Henna Artist | Mehendi Artisan',
+  description:
+    'Professional henna artist Rita Sheth serving Denver, CO. Specializing in bridal mehendi, Arabic designs, makeup, and hair styling. 18+ years of experience.',
+  keywords:
+    'henna artist, mehendi, bridal henna, Arabic henna, makeup artist, hair styling, Denver, Colorado',
+  authors: [{ name: 'Rita Sheth' }],
+  openGraph: {
+    title: 'Rita Sheth - Professional Henna Artist',
+    description:
+      'Professional henna artist with 18+ years of experience. Serving Denver, CO with bridal mehendi, Arabic designs, and more.',
+    type: 'website',
+    locale: 'en_US',
+  },
+}
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   return (
     <html lang="en">
-      <body className="min-h-screen bg-white text-neutral-900 antialiased">
-        {/* Single source of truth for “sticky on scroll” */}
-        <header className={`sticky top-0 z-50 border-b border-neutral-200 bg-white/90 backdrop-blur ${HEADER_H}`}>
-          <div className={`${CONTAINER} h-full flex items-center`}>
-            <Navigation />
-          </div>
-        </header>
+      <body className={`${inter.className} bg-white text-neutral-900`}>
+        {/* Fixed header — always visible */}
+        <div className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur border-b border-neutral-200">
+          <Navigation />
+        </div>
 
-        {/* Offset equals header height, so content never slides underneath */}
-        <main className={`${CONTAINER} ${MAIN_PT}`}>
+        {/* Push content down by header height (approx 80px) */}
+        <main className="pt-20 min-h-screen">
           {children}
         </main>
+
+        <Footer />
       </body>
     </html>
-  );
+  )
 }
